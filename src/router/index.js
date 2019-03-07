@@ -20,6 +20,7 @@ import Layout from '../views/layout/Layout'
     title: 'title'               the name show in subMenu and breadcrumb (recommend set)
     icon: 'svg-name'             the icon show in the sidebar
     breadcrumb: false            if false, the item will hidden in breadcrumb(default is true)
+    affix: true                  if true, the tag will affix in the tags-view
   }
  **/
 export const constantRouterMap = [
