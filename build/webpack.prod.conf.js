@@ -16,7 +16,7 @@ function resolve(dir) {
   return path.join(__dirname, '..', dir)
 }
 
-const env = require('../config/prod.env')
+const env = merge(require('../config/prod.env'), require('../config/project.property'))
 
 // For NamedChunksPlugin
 const seen = new Set()
@@ -55,7 +55,7 @@ const webpackConfig = merge(baseWebpackConfig, {
       template: 'index.html',
       inject: true,
       favicon: resolve('favicon.ico'),
-      title: 'vue-admin-template',
+      title: 'JM Vue Admin Template',
       minify: {
         removeComments: true,
         collapseWhitespace: true,

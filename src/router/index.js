@@ -67,7 +67,7 @@ export default new Router({
 })
 
 export const asyncRouterMap = [
-  nestedRouter,
   formRouter,
+  nestedRouter,
   exampleRouter
 ]
