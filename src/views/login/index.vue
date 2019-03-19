@@ -41,14 +41,19 @@
         <span> password: admin</span>
       </div>
     </el-form>
+    <login-footer class="login-footer"/>
   </div>
 </template>
 
 <script>
 import { isvalidUsername } from '@/utils/validate'
+import LoginFooter from './components/LoginFooter'
 
 export default {
   name: 'Login',
+  components: {
+    LoginFooter
+  },
   data() {
     const validateUsername = (rule, value, callback) => {
       if (!isvalidUsername(value)) {
@@ -66,9 +71,7 @@ export default {
     }
     return {
       appName: null,
-      appVersion: null,
       appDescription: null,
-      appAuthor: null,
       loginForm: {
         username: 'admin',
         password: 'admin'
@@ -93,9 +96,7 @@ export default {
   mounted() {
     const projectProperty = JSON.parse(unescape(process.env.PACKAGE_JSON))
     this.appName = projectProperty.name.replace(/-/g, ' ').toLocaleUpperCase()
-    this.appVersion = projectProperty.version
     this.appDescription = projectProperty.description
-    this.appAuthor = projectProperty.author
   },
   methods: {
     showPwd() {
@@ -231,5 +232,14 @@ $light_gray2: #b0b0b0;
     cursor: pointer;
     user-select: none;
   }
+}
+
+.login-footer {
+  position: fixed;
+  bottom: 15px;
+  left: 0;
+  right: 0;
+  width: 210px;
+  margin: 0 auto;
 }
 </style>
