@@ -27,9 +27,20 @@ import exampleRouter from './modules/example'
   }
  **/
 export const constantRouterMap = [
+  {
+    path: '/redirect',
+    component: Layout,
+    hidden: true,
+    children: [
+      {
+        path: '/redirect/:path*',
+        component: () => import('@/views/redirect/index')
+      }
+    ]
+  },
+
   { path: '/login', component: () => import('@/views/login/index'), hidden: true },
   { path: '/404', component: () => import('@/views/404'), hidden: true },
-  { path: '*', redirect: '/404', hidden: true },
 
   {
     path: '/',
@@ -69,5 +80,7 @@ export default new Router({
 export const asyncRouterMap = [
   formRouter,
   nestedRouter,
-  exampleRouter
+  exampleRouter,
+  // New router table should be added above: { path: '*', redirect: '/404', hidden: true }
+  { path: '*', redirect: '/404', hidden: true }
 ]
