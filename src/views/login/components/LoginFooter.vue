@@ -12,7 +12,7 @@ export default {
   name: 'LoginFooter',
   data() {
     return {
-      appAuthorArray: null,
+      appAuthorArray: [],
       appVersion: null,
       currentYear: formatDate(new Date(), 'yyyy')
     }
