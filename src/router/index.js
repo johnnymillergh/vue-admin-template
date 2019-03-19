@@ -9,6 +9,8 @@ Vue.use(Router)
 /* Layout */
 import Layout from '../views/layout/Layout'
 import nestedRouter from './modules/nested'
+import formRouter from './modules/form'
+import exampleRouter from './modules/example'
 
 /**
  * hidden: true                   if `hidden:true` will not show in the sidebar(default is false)
@@ -27,6 +29,7 @@ import nestedRouter from './modules/nested'
 export const constantRouterMap = [
   { path: '/login', component: () => import('@/views/login/index'), hidden: true },
   { path: '/404', component: () => import('@/views/404'), hidden: true },
+  { path: '*', redirect: '/404', hidden: true },
 
   {
     path: '/',
@@ -46,55 +49,15 @@ export const constantRouterMap = [
   },
 
   {
-    path: '/example',
-    component: Layout,
-    redirect: '/example/table',
-    name: 'Example',
-    meta: { title: 'Example', icon: 'example' },
-    children: [
-      {
-        path: 'table',
-        name: 'Table',
-        component: () => import('@/views/table/index'),
-        meta: {
-          title: 'Table',
-          icon: 'table'
-        }
-      },
-      {
-        path: 'tree',
-        name: 'Tree',
-        component: () => import('@/views/tree/index'),
-        meta: { title: 'Tree', icon: 'tree' }
-      }
-    ]
-  },
-
-  {
-    path: '/form',
-    component: Layout,
-    children: [
-      {
-        path: 'index',
-        name: 'Form',
-        component: () => import('@/views/form/index'),
-        meta: { title: 'Form', icon: 'form' }
-      }
-    ]
-  },
-
-  {
     path: 'external-link',
     component: Layout,
     children: [
       {
-        path: 'https://panjiachen.github.io/vue-element-admin-site/#/',
+        path: 'https://github.com/johnnymillergh/',
         meta: { title: 'External Link', icon: 'link' }
       }
     ]
-  },
-
-  { path: '*', redirect: '/404', hidden: true }
+  }
 ]
 
 export default new Router({
@@ -104,5 +67,7 @@ export default new Router({
 })
 
 export const asyncRouterMap = [
-  nestedRouter
+  nestedRouter,
+  formRouter,
+  exampleRouter
 ]
