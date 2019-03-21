@@ -12,15 +12,10 @@ export default {
   name: 'LoginFooter',
   data() {
     return {
-      appAuthorArray: [],
-      appVersion: null,
+      appAuthorArray: this.$store.state.app.author.split(' '),
+      appVersion: this.$store.state.app.version,
       currentYear: formatDate(new Date(), 'yyyy')
     }
-  },
-  mounted() {
-    const projectProperty = JSON.parse(unescape(process.env.PACKAGE_JSON))
-    this.appAuthorArray = projectProperty.author.split(' ')
-    this.appVersion = projectProperty.version
   }
 }
 </script>

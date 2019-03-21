@@ -1,4 +1,5 @@
 import Cookies from 'js-cookie'
+import { getProjectProperty } from '@/utils/app'
 
 const app = {
   state: {
@@ -6,7 +7,23 @@ const app = {
       opened: !+Cookies.get('sidebarStatus'),
       withoutAnimation: false
     },
-    device: 'desktop'
+    device: 'desktop',
+    /**
+     * Name of application.
+     */
+    appName: getProjectProperty().name,
+    /**
+     * Version of application.
+     */
+    appVersion: getProjectProperty().version,
+    /**
+     * Description of application.
+     */
+    description: getProjectProperty().description,
+    /**
+     * Author of application.
+     */
+    author: getProjectProperty().author
   },
   mutations: {
     TOGGLE_SIDEBAR: state => {

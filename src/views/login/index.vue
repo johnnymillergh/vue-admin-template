@@ -70,8 +70,8 @@ export default {
       }
     }
     return {
-      appName: null,
-      appDescription: null,
+      appName: this.$store.state.app.appName.replace(/-/g, ' ').toLocaleUpperCase(),
+      appDescription: this.$store.state.app.description,
       loginForm: {
         username: 'admin',
         password: 'admin'
@@ -92,11 +92,6 @@ export default {
       },
       immediate: true
     }
-  },
-  mounted() {
-    const projectProperty = JSON.parse(unescape(process.env.PACKAGE_JSON))
-    this.appName = projectProperty.name.replace(/-/g, ' ').toLocaleUpperCase()
-    this.appDescription = projectProperty.description
   },
   methods: {
     showPwd() {
