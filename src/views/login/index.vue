@@ -1,8 +1,14 @@
 <template>
   <div class="login-container">
-    <el-form ref="loginForm" :model="loginForm" :rules="loginRules" class="login-form" auto-complete="on" label-position="left">
-      <h3 class="title">{{ appName }}</h3>
-      <h4 class="description">{{ appDescription }}</h4>
+    <el-form
+      ref="loginForm"
+      :model="loginForm"
+      :rules="loginRules"
+      class="login-form"
+      auto-complete="on"
+      label-position="left">
+      <h3 class="app-title">{{ appName }}</h3>
+      <h4 class="app-description">{{ appDescription }}</h4>
       <el-form-item prop="username">
         <span class="svg-container">
           <svg-icon icon-class="user"/>
@@ -14,14 +20,14 @@
           <svg-icon icon-class="password"/>
         </span>
         <el-input
-          :type="pwdType"
+          :type="inputType"
           v-model="loginForm.password"
           name="password"
           auto-complete="on"
           placeholder="Password"
           @keyup.enter.native="handleLogin"/>
-        <span class="show-pwd" @click="showPwd">
-          <svg-icon :icon-class="pwdType === 'password' ? 'eye' : 'eye-open'"/>
+        <span class="password-eye" @click="showPassword">
+          <svg-icon :icon-class="inputType === 'password' ? 'eye' : 'eye-open'"/>
         </span>
       </el-form-item>
       <el-row :gutter="24" type="flex" justify="center">
@@ -36,9 +42,9 @@
           </el-button>
         </el-col>
       </el-row>
-      <div class="tips">
-        <span style="margin-right:20px;">username: admin</span>
-        <span> password: admin</span>
+      <div v-if="developmentEnvironment" class="hint">
+        <span>Username: {{ hintUsername }}</span>
+        <span>Password: {{ hintPassword }}</span>
       </div>
     </el-form>
     <login-footer class="login-footer"/>
@@ -73,19 +79,25 @@ export default {
       appName: this.$store.state.app.appName.replace(/-/g, ' ').toLocaleUpperCase(),
       appDescription: this.$store.state.app.description,
       loginForm: {
-        username: 'admin',
-        password: 'admin'
+        username: '',
+        password: ''
       },
+      hintUsername: null,
+      hintPassword: null,
       loginRules: {
         username: [{ required: true, trigger: 'blur', validator: validateUsername }],
         password: [{ required: true, trigger: 'blur', validator: validatePass }]
       },
       loading: false,
-      pwdType: 'password',
-      redirect: undefined
+      inputType: 'password',
+      redirect: undefined,
+      developmentEnvironment: false
     }
   },
   watch: {
+    /**
+     * Watch global route (URL). If URL changes, then generate a redirect route which will be routed to when user signed in.
+     */
     $route: {
       handler: function(route) {
         this.redirect = route.query && route.query.redirect
@@ -93,12 +105,19 @@ export default {
       immediate: true
     }
   },
+  mounted() {
+    this.developmentEnvironment = process.env.NODE_ENV && (process.env.NODE_ENV === 'development')
+    if (this.developmentEnvironment) {
+      this.hintUsername = 'admin'
+      this.hintPassword = 'admin'
+    }
+  },
   methods: {
-    showPwd() {
-      if (this.pwdType === 'password') {
-        this.pwdType = ''
+    showPassword() {
+      if (this.inputType === 'password') {
+        this.inputType = ''
       } else {
-        this.pwdType = 'password'
+        this.inputType = 'password'
       }
     },
     handleLogin() {
@@ -181,7 +200,7 @@ $light_gray2: #b0b0b0;
     margin: 24px auto;
   }
 
-  .tips {
+  .hint {
     font-size: 14px;
     color: #fff;
     margin-top: 10px;
@@ -202,7 +221,7 @@ $light_gray2: #b0b0b0;
     display: inline-block;
   }
 
-  .title {
+  .app-title {
     font-size: 36px;
     color: $light_gray;
     margin: 0 auto 40px auto;
@@ -210,7 +229,7 @@ $light_gray2: #b0b0b0;
     font-weight: bold;
   }
 
-  .description {
+  .app-description {
     font-size: 18px;
     color: $light_gray2;
     margin: 0 auto 40px auto;
@@ -218,7 +237,7 @@ $light_gray2: #b0b0b0;
     font-weight: normal;
   }
 
-  .show-pwd {
+  .password-eye {
     position: absolute;
     right: 10px;
     top: 7px;
@@ -227,14 +246,14 @@ $light_gray2: #b0b0b0;
     cursor: pointer;
     user-select: none;
   }
-}
 
-.login-footer {
-  position: fixed;
-  bottom: 15px;
-  left: 0;
-  right: 0;
-  width: 210px;
-  margin: 0 auto;
+  .login-footer {
+    position: fixed;
+    bottom: 15px;
+    left: 0;
+    right: 0;
+    width: 210px;
+    margin: 0 auto;
+  }
 }
 </style>
