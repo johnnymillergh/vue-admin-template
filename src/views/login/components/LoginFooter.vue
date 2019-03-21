@@ -13,7 +13,7 @@ export default {
   data() {
     return {
       appAuthorArray: this.$store.state.app.author.split(' '),
-      appVersion: this.$store.state.app.version,
+      appVersion: this.$store.state.app.appVersion,
       currentYear: formatDate(new Date(), 'yyyy')
     }
   }
