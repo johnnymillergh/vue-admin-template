@@ -7,14 +7,24 @@
         <img :src="avatar+'?imageView2/1/w/80/h/80'" class="user-avatar">
         <i class="el-icon-caret-bottom"/>
       </div>
-      <el-dropdown-menu slot="dropdown" class="user-dropdown">
+      <el-dropdown-menu slot="dropdown" style="width: 178px;">
+        <span class="signed-in-text">Signed in as</span>
+        <p class="username">{{ username }}</p>
+        <div class="line-separator"/>
+        <p class="user-status">💪 Coding & Building</p>
         <router-link class="inlineBlock" to="/">
-          <el-dropdown-item>
+          <el-dropdown-item divided>
             Home
           </el-dropdown-item>
         </router-link>
+        <el-dropdown-item>
+          Your Profile
+        </el-dropdown-item>
+        <el-dropdown-item>
+          Settings
+        </el-dropdown-item>
         <el-dropdown-item divided>
-          <span style="display:block;" @click="logout">LogOut</span>
+          <span style="display:block;" @click="logout">Sign out</span>
         </el-dropdown-item>
       </el-dropdown-menu>
     </el-dropdown>
@@ -30,6 +40,11 @@ export default {
   components: {
     Breadcrumb,
     Hamburger
+  },
+  data() {
+    return {
+      username: 'Johnny Miller\'s Testing Username'
+    }
   },
   computed: {
     ...mapGetters([
@@ -90,6 +105,43 @@ export default {
       }
     }
   }
+}
+
+.signed-in-text {
+  display: block;
+  padding: 0 20px;
+  font-weight: lighter;
+  font-size: 14px;
+  color: #24292e;
+}
+
+.username {
+  display: block;
+  padding: 0 20px;
+  margin: 2px 0;
+  width: 176px;
+  font-weight: bold;
+  font-size: 14px;
+  color: #24292e;
+  overflow: hidden;
+  text-overflow:ellipsis;
+  white-space: nowrap;
+}
+
+.user-status {
+  display: block;
+  padding: 0 20px;
+  margin: 10px 0;
+  width: 176px;
+  font-size: 12px;
+  color: #24292e;
+  text-overflow: ellipsis;
+}
+
+.line-separator {
+  background-color: #e1e4e8;
+  height: 1px;
+  margin: 8px 1px;
 }
 </style>
 

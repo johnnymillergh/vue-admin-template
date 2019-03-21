@@ -1,9 +1,9 @@
 {
-  "name": "vue-admin-template",
-  "version": "3.9.0",
+  "name": "jm-vue-admin-template",
+  "version": "1.0.0-canary",
   "license": "MIT",
   "description": "A vue admin template with Element UI & axios & iconfont & permission control & lint",
-  "author": "Pan <panfree23@gmail.com>",
+  "author": "Johnny Miller (锺俊) <johnnysviva@outlook.com>",
   "scripts": {
     "dev": "webpack-dev-server --inline --progress --config build/webpack.dev.conf.js",
     "start": "npm run dev",
@@ -21,6 +21,7 @@
     "normalize.css": "7.0.0",
     "nprogress": "0.2.0",
     "vue": "2.5.17",
+    "vue-i18n": "7.3.2",
     "vue-router": "3.0.1",
     "vuex": "3.0.1"
   },

@@ -48,7 +48,7 @@ const devWebpackConfig = merge(baseWebpackConfig, {
   },
   plugins: [
     new webpack.DefinePlugin({
-      'process.env': require('../config/dev.env')
+      'process.env': merge(require('../config/dev.env'), require('../config/project.property'))
     }),
     new webpack.HotModuleReplacementPlugin(),
     // https://github.com/ampedandwired/html-webpack-plugin
@@ -57,7 +57,7 @@ const devWebpackConfig = merge(baseWebpackConfig, {
       template: 'index.html',
       inject: true,
       favicon: resolve('favicon.ico'),
-      title: 'vue-admin-template'
+      title: 'JM Vue Admin Template'
     })
   ]
 })
@@ -80,7 +80,7 @@ module.exports = new Promise((resolve, reject) => {
             messages: [
               `Your application is running here: http://${
                 devWebpackConfig.devServer.host
-              }:${port}`
+                }:${port}`
             ]
           },
           onErrors: config.dev.notifyOnErrors
