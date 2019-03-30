@@ -39,15 +39,8 @@ service.interceptors.request.use(
 service.interceptors.response.use(
   response => {
     const res = response.data
-    console.log('res', res)
     if (res.code !== UniversalStatus.SUCCESS.code) {
-      Notification({
-        title: 'Server Responded Error',
-        message: 'Error message: ' + res.message,
-        type: 'error',
-        duration: 5 * 1000,
-        showClose: true
-      })
+      console.error('Server Responded an Error (%s). Response: ', res.timestamp, res)
 
       if (res.code === UniversalStatus.TOKEN_PARSE_ERROR.code ||
         res.code === UniversalStatus.TOKEN_OUT_OF_CONTROL.code ||
@@ -67,7 +60,9 @@ service.interceptors.response.use(
           })
         })
       }
-      return Promise.reject('error')
+      const rejectedReason = `Server responded an error! ` +
+        `Status: ${res.status} (${UniversalStatus.getStatusByCode(res.status).message}), message: ${res.message}`
+      return Promise.reject(rejectedReason)
     } else {
       return response.data
     }
