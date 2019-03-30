@@ -40,12 +40,12 @@ service.interceptors.request.use(
 service.interceptors.response.use(
   response => {
     const res = response.data
-    if (res.code !== UniversalStatus.SUCCESS.code) {
+    if (res.status !== UniversalStatus.SUCCESS.code) {
       console.error('Server responded an error (%s). Response: ', res.timestamp, res)
 
-      if (res.code === UniversalStatus.TOKEN_PARSE_ERROR.code ||
-        res.code === UniversalStatus.TOKEN_OUT_OF_CONTROL.code ||
-        res.code === UniversalStatus.TOKEN_EXPIRED.code) {
+      if (res.status === UniversalStatus.TOKEN_PARSE_ERROR.code ||
+        res.status === UniversalStatus.TOKEN_OUT_OF_CONTROL.code ||
+        res.status === UniversalStatus.TOKEN_EXPIRED.code) {
         MessageBox.confirm(
           'Your account has been logged out. Continue to stay or sign in again.',
           'Activity Warning',
