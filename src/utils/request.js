@@ -6,7 +6,7 @@ import { Message, MessageBox, Notification } from 'element-ui'
 
 // 1. Create an axios instance
 const service = axios.create({
-  // Base UTL of API
+  // Base URL of API
   baseURL: process.env.BASE_API,
   // Request timeout: 30s
   timeout: 30000

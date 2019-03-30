@@ -14,14 +14,18 @@
       <el-row type="flex" justify="center">
         <el-col :span="16">
           <h2 class="create-account">Create your personal account</h2>
-          <el-form ref="register" :model="registerForm" label-position="top" label-width="120px">
-            <el-form-item label="Username">
+          <el-form ref="registerForm"
+                   :model="registerForm"
+                   :rules="registerFormRules"
+                   label-position="top"
+                   label-width="120px">
+            <el-form-item label="Username" prop="username">
               <el-input v-model="registerForm.username" class="fixed-width-input"/>
             </el-form-item>
-            <el-form-item label="Email address">
+            <el-form-item label="Email address" prop="email">
               <el-input v-model="registerForm.email" class="fixed-width-input"/>
             </el-form-item>
-            <el-form-item label="Password">
+            <el-form-item label="Password" prop="password">
               <el-input v-model="registerForm.password" class="fixed-width-input"/>
             </el-form-item>
           </el-form>
@@ -50,16 +54,61 @@
           We’ll occasionally send you account related emails.</p>
       </el-row>
       <el-row>
-        <el-button type="success">Create an account</el-button>
+        <el-button type="success" @click="createAccount" :loading="createAccountLoading">Create an account</el-button>
       </el-row>
     </div>
   </div>
 </template>
 
 <script>
+import { join } from '@/api/auth/join'
+import StringUtil from '@/utils/string'
+import { UniversalStatus } from '@/constants/universal-status'
+
 export default {
   name: 'Join',
   data () {
+    const validateUsername = (rule, value, callback) => {
+      if (StringUtil.isEmpty(value)) {
+        return callback(new Error(`${rule.field} is not empty`))
+      }
+      if (!StringUtil.isLengthBetween(value, 4, 50)) {
+        return callback(new Error('length of username must be between 1 and 50'))
+      }
+      const param = { username: value }
+      join.checkUsernameUniqueness(param).then(() => {
+        this.usernameValidity = true
+        callback()
+      }).catch(error => {
+        this.usernameValidity = false
+        callback(new Error(error))
+      })
+    }
+    const validateEmail = (rule, value, callback) => {
+      if (StringUtil.isEmpty(value)) {
+        return callback(new Error(`${rule.field} is not empty`))
+      }
+      if (!StringUtil.isEmail(value)) {
+        return callback(new Error(`invalid ${rule.field}`))
+      }
+      const param = { email: value }
+      join.checkEmailUniqueness(param).then(() => {
+        this.emailValidity = true
+        callback()
+      }).catch(error => {
+        this.emailValidity = false
+        callback(new Error(error))
+      })
+    }
+    const validatePassword = (rule, value, callback) => {
+      if (StringUtil.isEmpty(value)) {
+        return callback(new Error(`${rule.field} is not empty`))
+      }
+      if (!StringUtil.isLengthBetween(value, 8, 30)) {
+        return callback(new Error('length of password must be between 1 and 50'))
+      }
+      callback()
+    }
     return {
       appName: this.$store.state.app.appName.toLocaleUpperCase(),
       placeholderText: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, ' +
@@ -68,14 +117,42 @@ export default {
         'Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. ' +
         'Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
       registerForm: {
-        username: null,
-        password: null,
-        email: null
-      }
+        username: 'test',
+        password: '12345678',
+        email: 'test@gmail.com'
+      },
+      registerFormRules: {
+        username: [{ required: true, validator: validateUsername, trigger: 'blur' }],
+        email: [{ required: true, validator: validateEmail, trigger: 'blur' }],
+        password: [{ required: true, validator: validatePassword, trigger: ['change', 'blur'] }]
+      },
+      createAccountLoading: false,
+      usernameValidity: false,
+      emailValidity: false
     }
   },
-  mounted () {
-    // request('www.bing.com')
+  methods: {
+    async createAccount () {
+      this.createAccountLoading = true
+      this.$refs['registerForm'].validate()
+      if (!(this.usernameValidity && this.emailValidity)) {
+        this.createAccountLoading = false
+        return
+      }
+      const response = await join.resister(this.registerForm)
+      if (response.status !== UniversalStatus.SUCCESS.code) {
+        this.createAccountLoading = false
+        return
+      }
+      this.$confirm(response.message, 'Congratulations', {
+        confirmButtonText: 'Sign in immediately',
+        showCancelButton: false,
+        closeOnClickModal: false
+      }).then(() => {
+        this.$router.push('/')
+      })
+      this.createAccountLoading = false
+    }
   }
 }
 </script>

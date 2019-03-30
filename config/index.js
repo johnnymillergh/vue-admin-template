@@ -9,7 +9,17 @@ module.exports = {
     // Paths
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
-    proxyTable: {},
+    // Dev server proxy's configuration. Proxy all requests to localhost:8080 when under development.
+    // Remember to config proxyTable when new API is added.
+    proxyTable: {
+      '/auth': {
+        target: 'http://localhost:8080',
+        changeOrigin: true,
+        pathRewrite: {
+          '^/auth': '/springboottemplate/auth'
+        }
+      }
+    },
 
     // Various Dev Server settings
     host: 'localhost', // can be overwritten by process.env.HOST

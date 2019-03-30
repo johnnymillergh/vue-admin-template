@@ -43,6 +43,70 @@ StringUtil.isNotEmpty = function (targetString) {
 }
 
 /**
+ * Check if length of a string is less than threshold value.
+ * @param {string} targetString target string
+ * @param {number} threshold threshold value
+ * @return {boolean} true - length of a string is less than threshold value
+ */
+StringUtil.isLengthLessThen = function (targetString, threshold) {
+  if (StringUtil.isNotString(targetString)) {
+    throw new Error('Type of argument targetString expected string, but got ' + typeof targetString)
+  }
+  if (typeof threshold !== 'number') {
+    throw new Error('Type of argument minLength expected number, but got ' + typeof minLength)
+  }
+  return targetString.length < threshold
+}
+
+/**
+ * Check if length of a string is not grater than threshold value.
+ * @param {string} targetString target string
+ * @param {number} threshold threshold value
+ * @return {boolean} true - length of a string is not grater than threshold value
+ */
+StringUtil.isLengthNotGreaterThen = function (targetString, threshold) {
+  if (StringUtil.isNotString(targetString)) {
+    throw new Error('Type of argument targetString expected string, but got ' + typeof targetString)
+  }
+  if (typeof threshold !== 'number') {
+    throw new Error('Type of argument minLength expected number, but got ' + typeof minLength)
+  }
+  return targetString.length <= threshold
+}
+
+/**
+ * Check if length of a string is grater than threshold value.
+ * @param {string} targetString target string
+ * @param {number} threshold threshold value
+ * @return {boolean} true - length of a string is less than threshold value
+ */
+StringUtil.isLengthGraterThen = function (targetString, threshold) {
+  if (StringUtil.isNotString(targetString)) {
+    throw new Error('Type of argument targetString expected string, but got ' + typeof targetString)
+  }
+  if (typeof threshold !== 'number') {
+    throw new Error('Type of argument minLength expected number, but got ' + typeof minLength)
+  }
+  return targetString.length > threshold
+}
+
+/**
+ * Check if length of a string is not less than threshold value.
+ * @param {string} targetString target string
+ * @param {number} threshold threshold value
+ * @return {boolean} true - length of a string is not less than threshold value
+ */
+StringUtil.isLengthNotLessThen = function (targetString, threshold) {
+  if (StringUtil.isNotString(targetString)) {
+    throw new Error('Type of argument targetString expected string, but got ' + typeof targetString)
+  }
+  if (typeof threshold !== 'number') {
+    throw new Error('Type of argument minLength expected number, but got ' + typeof minLength)
+  }
+  return targetString.length >= threshold
+}
+
+/**
  * Check if length of a string is between min length and max length.
  * @param {string} targetString target string
  * @param {number} minLength min length
@@ -60,6 +124,17 @@ StringUtil.isLengthBetween = function (targetString, minLength, maxLength) {
     throw new Error('Type of argument maxLength expected number, but got ' + typeof minLength)
   }
   return minLength <= targetString.length && targetString.length <= maxLength
+}
+
+/**
+ * Check if a email string is valid
+ * @param {string} email email string
+ * @return {boolean} true - email string is valid
+ */
+StringUtil.isEmail = function (email) {
+  // emailRegExp is from http://emailregex.com/
+  const emailRegExp = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+  return emailRegExp.test(email)
 }
 
 Object.freeze(StringUtil)
