@@ -1,0 +1,145 @@
+<template>
+  <div>
+    <header class="header" role="banner"/>
+    <div class="setup-header">
+      <h1>Join {{ appName }}</h1>
+      <p class="lead">The best way to design, build, and ship software.</p>
+    </div>
+    <el-steps :active="1" class="steps">
+      <el-step title="Step 1" description="Some description"/>
+      <el-step title="Step 2" description="Some description"/>
+      <el-step title="Step 3" description="Some description"/>
+    </el-steps>
+    <div class="register-container">
+      <el-row type="flex" justify="center">
+        <el-col :span="16">
+          <h2 class="create-account">Create your personal account</h2>
+          <el-form ref="register" :model="registerForm" label-position="top" label-width="120px">
+            <el-form-item label="Username">
+              <el-input v-model="registerForm.username" class="fixed-width-input"/>
+            </el-form-item>
+            <el-form-item label="Email address">
+              <el-input v-model="registerForm.email" class="fixed-width-input"/>
+            </el-form-item>
+            <el-form-item label="Password">
+              <el-input v-model="registerForm.password" class="fixed-width-input"/>
+            </el-form-item>
+          </el-form>
+        </el-col>
+        <el-col :span="8">
+          <el-card shadow="hover">
+            <div slot="header" class="clearfix">
+              <h2>You’ll love GitHub</h2>
+            </div>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
+              dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex
+              ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
+              fugiat
+              nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit
+              anim id est laborum.</p>
+          </el-card>
+        </el-col>
+      </el-row>
+      <el-row>
+        <el-button type="success">Create an account</el-button>
+      </el-row>
+    </div>
+  </div>
+</template>
+
+<script>
+export default {
+  name: 'Join',
+  data () {
+    return {
+      appName: this.$store.state.app.appName.toLocaleUpperCase(),
+      registerForm: {
+        username: 'Test',
+        password: '123456',
+        email: 'test@gmail.com'
+      }
+    }
+  }
+}
+</script>
+
+<style rel="stylesheet/scss" lang="scss" scoped>
+$bg: #73777f;
+$dark_gray: #889aa4;
+$light_gray: #eee;
+$light_gray2: #b0b0b0;
+.header {
+  background-color: #24292e;
+  color: hsla(0, 0%, 100%, .7);
+  padding-bottom: 12px;
+  padding-top: 12px;
+  z-index: 32;
+  height: 72px;
+}
+
+.setup-header {
+  margin-left: auto;
+  margin-right: auto;
+  padding-top: 32px;
+  padding-left: 16px;
+  padding-right: 16px;
+  max-width: 1012px;
+}
+
+.steps {
+  margin-left: auto;
+  margin-right: auto;
+  padding: 0 16px;
+  max-width: 1012px;
+}
+
+.register-container {
+  margin-left: auto;
+  margin-right: auto;
+  padding: 32px 16px;
+  max-width: 1012px;
+}
+
+.lead {
+  color: #586069;
+  font-size: 20px;
+  font-weight: 300;
+  margin-top: 0;
+  margin-bottom: 30px;
+}
+
+.create-account {
+  font-size: 24px !important;
+  font-weight: 300 !important;
+}
+
+.fixed-width-input {
+  width: 466px;
+}
+
+.setup-info-module {
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, .075);
+  margin-bottom: 30px;
+  width: 294px;
+}
+
+h1 {
+  font-size: 45px;
+  font-weight: 400;
+  letter-spacing: -1px;
+  line-height: 1.1;
+  margin-bottom: 0;
+  margin-top: 0;
+}
+
+h2 {
+  font-size: 24px;
+  font-weight: 400;
+  letter-spacing: -1px;
+  line-height: 1.1;
+  margin-bottom: 0;
+  margin-top: 0;
+}
+</style>

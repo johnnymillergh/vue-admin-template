@@ -41,7 +41,7 @@ export default {
     Breadcrumb,
     Hamburger
   },
-  data() {
+  data () {
     return {
       username: 'Johnny Miller\'s Testing Username'
     }
@@ -53,10 +53,10 @@ export default {
     ])
   },
   methods: {
-    toggleSideBar() {
+    toggleSideBar () {
       this.$store.dispatch('ToggleSideBar')
     },
-    logout() {
+    logout () {
       this.$store.dispatch('LogOut').then(() => {
         location.reload() // 为了重新实例化vue-router对象 避免bug
       })

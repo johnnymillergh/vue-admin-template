@@ -26,10 +26,10 @@
 export default {
   name: 'Page404',
   computed: {
-    message() {
+    message () {
       return 'Page Not Found'
     },
-    message2() {
+    message2 () {
       return ''
     }
   }

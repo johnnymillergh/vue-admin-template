@@ -60,7 +60,7 @@ export default {
   components: {
     LoginFooter
   },
-  data() {
+  data () {
     const validateUsername = (rule, value, callback) => {
       if (!isvalidUsername(value)) {
         callback(new Error('Incorrect username'))
@@ -99,13 +99,13 @@ export default {
      * Watch global route (URL). If URL changes, then generate a redirect route which will be routed to when user signed in.
      */
     $route: {
-      handler: function(route) {
+      handler: function (route) {
         this.redirect = route.query && route.query.redirect
       },
       immediate: true
     }
   },
-  mounted() {
+  mounted () {
     this.developmentEnvironment = process.env.NODE_ENV && (process.env.NODE_ENV === 'development')
     if (this.developmentEnvironment) {
       this.hintUsername = 'admin'
@@ -113,14 +113,14 @@ export default {
     }
   },
   methods: {
-    showPassword() {
+    showPassword () {
       if (this.inputType === 'password') {
         this.inputType = ''
       } else {
         this.inputType = 'password'
       }
     },
-    handleLogin() {
+    handleLogin () {
       this.$refs.loginForm.validate(valid => {
         if (valid) {
           this.loading = true
@@ -136,7 +136,8 @@ export default {
         }
       })
     },
-    handleRegister() {
+    handleRegister () {
+      this.$router.push('/join')
     }
   }
 }

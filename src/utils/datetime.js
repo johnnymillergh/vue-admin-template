@@ -4,7 +4,7 @@
  * @param date Date object
  * @return {string} Formatted date string
  */
-export function formatDate(date, formatPattern) {
+export function formatDate (date, formatPattern) {
   const object = {
     'M+': date.getMonth() + 1,
     'd+': date.getDate(),

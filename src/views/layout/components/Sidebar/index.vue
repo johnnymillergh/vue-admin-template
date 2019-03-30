@@ -25,10 +25,10 @@ export default {
       'sidebar',
       'permission_routers'
     ]),
-    variables() {
+    variables () {
       return variables
     },
-    isCollapse() {
+    isCollapse () {
       return !this.sidebar.opened
     }
   }

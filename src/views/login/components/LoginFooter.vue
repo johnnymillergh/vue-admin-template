@@ -1,7 +1,11 @@
 <template>
   <div class="footer-container">
-    <h1 class="footer-font">{{ appAuthorArray[0]+' '+appAuthorArray[1]+' '+appAuthorArray[2] }} © {{ currentYear }}</h1>
-    <h1 class="footer-font">Version {{ appVersion }}</h1>
+    <h1 class="footer-font">
+      {{ appAuthorArray[0]+' '+appAuthorArray[1]+' '+appAuthorArray[2] }} © {{ currentYear }}
+    </h1>
+    <h1 class="footer-font">
+      Version {{ appVersion }}
+    </h1>
   </div>
 </template>
 
@@ -10,7 +14,7 @@ import { formatDate } from '@/utils/datetime'
 
 export default {
   name: 'LoginFooter',
-  data() {
+  data () {
     return {
       appAuthorArray: this.$store.state.app.author.split(' '),
       appVersion: this.$store.state.app.appVersion,
@@ -23,6 +27,7 @@ export default {
 <style scoped>
 .footer-container {
 }
+
 .footer-font {
   font-size: 12px;
   text-align: center;
