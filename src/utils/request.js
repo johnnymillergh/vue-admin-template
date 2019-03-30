@@ -39,13 +39,13 @@ service.interceptors.request.use(
 // 3. Response interceptor's configuration
 service.interceptors.response.use(
   response => {
-    const res = response.data
-    if (res.status !== UniversalStatus.SUCCESS.code) {
-      console.error('Server responded an error (%s). Response: ', res.timestamp, res)
+    const resp = response.data
+    if (resp.status !== UniversalStatus.SUCCESS.code) {
+      console.error('Server responded an error (%s). Response: ', resp.timestamp, resp)
 
-      if (res.status === UniversalStatus.TOKEN_PARSE_ERROR.code ||
-        res.status === UniversalStatus.TOKEN_OUT_OF_CONTROL.code ||
-        res.status === UniversalStatus.TOKEN_EXPIRED.code) {
+      if (resp.status === UniversalStatus.TOKEN_PARSE_ERROR.code ||
+        resp.status === UniversalStatus.TOKEN_OUT_OF_CONTROL.code ||
+        resp.status === UniversalStatus.TOKEN_EXPIRED.code) {
         MessageBox.confirm(
           'Your account has been logged out. Continue to stay or sign in again.',
           'Activity Warning',
@@ -62,11 +62,11 @@ service.interceptors.response.use(
         })
       }
       const rejectedReason = `Server responded an error! ` +
-        `Status: ${res.status} (${UniversalStatus.getStatusByCode(res.status).message}), message: ${res.message}`
+        `Status: ${resp.status} (${UniversalStatus.getStatusByCode(resp.status).message}), message: ${resp.message}`
       Message.error(rejectedReason)
-      return Promise.reject(rejectedReason)
+      return Promise.reject(resp.message)
     } else {
-      return response.data
+      return Promise.resolve(resp)
     }
   },
   error => {
@@ -78,6 +78,7 @@ service.interceptors.response.use(
       duration: 5 * 1000,
       showClose: true
     })
+    console.log(error)
     return Promise.reject(error)
   }
 )
@@ -92,10 +93,10 @@ export const get = function (url, params) {
   return new Promise((resolve, reject) => {
     service.get(url, {
       params: params
-    }).then(res => {
-      resolve(res.data)
-    }).catch(err => {
-      reject(err.data)
+    }).then(resp => {
+      resolve(resp)
+    }).catch(rejectedReason => {
+      reject(rejectedReason)
     })
   })
 }
@@ -109,11 +110,11 @@ export const get = function (url, params) {
 export function post (url, params) {
   return new Promise((resolve, reject) => {
     service.post(url, params)
-      .then(res => {
-        resolve(res.data)
+      .then(resp => {
+        resolve(resp)
       })
-      .catch(err => {
-        reject(err.data)
+      .catch(rejectedReason => {
+        reject(rejectedReason)
       })
   })
 }
