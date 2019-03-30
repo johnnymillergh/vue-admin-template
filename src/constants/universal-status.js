@@ -28,7 +28,7 @@ export const UniversalStatus = {
   /**
    * Log out successfully
    */
-  LOGOUT: new Status(200, 'Log out successfully'),
+  LOGOUT: new Status(20001, 'Log out successfully'),
   /**
    * Error or failure
    */
@@ -36,15 +36,15 @@ export const UniversalStatus = {
   /**
    * Failure
    */
-  FAILURE: new Status(500, 'Failure'),
+  FAILURE: new Status(50001, 'Failure'),
   /**
    * Warning
    */
-  WARNING: new Status(500, 'Warning'),
+  WARNING: new Status(50002, 'Warning'),
   /**
    * Role not found
    */
-  ROLE_NOT_FOUND: new Status(500, 'Role not found.'),
+  ROLE_NOT_FOUND: new Status(50003, 'Role not found.'),
   /**
    * Unauthorized
    */
@@ -65,16 +65,16 @@ export const UniversalStatus = {
   /**
    * Bad request
    */
-  BAD_REQUEST: new Status(400, 'Bad request.'),
+  BAD_REQUEST: new Status(40001, 'Bad request.'),
   /**
    * Param not matched
    */
-  PARAM_NOT_MATCH: new Status(400, 'Param not matched. The request could not be fulfilled' +
+  PARAM_NOT_MATCH: new Status(40002, 'Param not matched. The request could not be fulfilled' +
     ' due to the incorrect syntax of the request.'),
   /**
    * Param not null
    */
-  PARAM_NOT_NULL: new Status(400, 'Param not null.'),
+  PARAM_NOT_NULL: new Status(40003, 'Param not null.'),
   /**
    * User disabled
    */
@@ -82,24 +82,37 @@ export const UniversalStatus = {
   /**
    * Username or password error
    */
-  USERNAME_OR_PASSWORD_ERROR: new Status(5001, 'Username or password error.'),
+  USERNAME_OR_PASSWORD_ERROR: new Status(50004, 'Username or password error.'),
   /**
    * Token expired
    */
-  TOKEN_EXPIRED: new Status(5002, 'Token expired.'),
+  TOKEN_EXPIRED: new Status(50005, 'Token expired.'),
   /**
    * Token parse error
    */
-  TOKEN_PARSE_ERROR: new Status(5002, 'Token parse error.'),
+  TOKEN_PARSE_ERROR: new Status(50006, 'Token parse error.'),
   /**
    * Token out of control
    */
-  TOKEN_OUT_OF_CONTROL: new Status(5003, 'Token out of control. ' +
+  TOKEN_OUT_OF_CONTROL: new Status(50007, 'Token out of control. ' +
     'Current user has logged in before. Please try to reset current password or sign in again.'),
   /**
    * Kick out self warning. Cannot kick self out.
    */
-  KICK_OUT_SELF: new Status(5004, 'Cannot kick self out. Please try to sign in again.')
+  KICK_OUT_SELF: new Status(50008, 'Cannot kick self out. Please try to sign in again.'),
+  /**
+   * Get status by code.
+   * @param code {Number} Code that server responded.
+   */
+  getStatusByCode: code => {
+    let status = null
+    Object.keys(UniversalStatus).forEach(statusKey => {
+      if (typeof UniversalStatus[statusKey] !== 'function' && UniversalStatus[statusKey].code === code) {
+        status = UniversalStatus[statusKey]
+      }
+    })
+    return status
+  }
 }
 
 Object.freeze(UniversalStatus)
