@@ -1,7 +1,8 @@
 /**
  * Universal Status.
  * @author Johnny Miller (鍾俊), e-mail: johnnysviva@outlook.com
- * @date 2019-03-30 11:56
+ * @date 2019-03-30
+ * @time 11:56
  */
 class Status {
   constructor (code, message) {
@@ -16,7 +17,8 @@ class Status {
 /**
  * Universal Status Enumerations.
  * @author Johnny Miller (鍾俊), e-mail: johnnysviva@outlook.com
- * @date 2019-03-30 12:15
+ * @date 2019-03-30
+ * @time 12:15
  */
 export const UniversalStatus = {
   /**
@@ -99,3 +101,5 @@ export const UniversalStatus = {
    */
   KICK_OUT_SELF: new Status(5004, 'Cannot kick self out. Please try to sign in again.')
 }
+
+Object.freeze(UniversalStatus)
