@@ -2,9 +2,9 @@ import axios from 'axios'
 import store from '../store'
 import { TokenKey, getToken } from '@/utils/auth'
 import { UniversalStatus } from '@/constants/universal-status'
-import { MessageBox, Notification } from 'element-ui'
+import { Message, MessageBox, Notification } from 'element-ui'
 
-// Create an axios instance
+// 1. Create an axios instance
 const service = axios.create({
   // Base UTL of API
   baseURL: process.env.BASE_API,
@@ -12,13 +12,14 @@ const service = axios.create({
   timeout: 30000
 })
 
-// Request interceptor's configuration
+// 2. Request interceptor's configuration
 service.interceptors.request.use(
   config => {
     if (store.getters.token) {
       // Send request with JWT
       config.headers[TokenKey] = getToken()
     }
+    config.params
     return config
   },
   error => {
@@ -35,12 +36,12 @@ service.interceptors.request.use(
   }
 )
 
-// Response interceptor's configuration
+// 3. Response interceptor's configuration
 service.interceptors.response.use(
   response => {
     const res = response.data
     if (res.code !== UniversalStatus.SUCCESS.code) {
-      console.error('Server Responded an Error (%s). Response: ', res.timestamp, res)
+      console.error('Server responded an error (%s). Response: ', res.timestamp, res)
 
       if (res.code === UniversalStatus.TOKEN_PARSE_ERROR.code ||
         res.code === UniversalStatus.TOKEN_OUT_OF_CONTROL.code ||
@@ -62,16 +63,17 @@ service.interceptors.response.use(
       }
       const rejectedReason = `Server responded an error! ` +
         `Status: ${res.status} (${UniversalStatus.getStatusByCode(res.status).message}), message: ${res.message}`
+      Message.error(rejectedReason)
       return Promise.reject(rejectedReason)
     } else {
       return response.data
     }
   },
   error => {
-    console.error('Error occurred when getting request. ', error)
+    console.error('Error occurred when getting response. ', error)
     Notification({
       title: 'Response-Handling Error',
-      message: 'Error occurred when getting request. ' + error.message,
+      message: 'Error occurred when getting response. ' + error.message,
       type: 'error',
       duration: 5 * 1000,
       showClose: true
@@ -79,5 +81,41 @@ service.interceptors.response.use(
     return Promise.reject(error)
   }
 )
+
+/**
+ * Send a GET request.
+ * @param url URL
+ * @param params Params
+ * @return {Promise<any>} Response data
+ */
+export const get = function (url, params) {
+  return new Promise((resolve, reject) => {
+    service.get(url, {
+      params: params
+    }).then(res => {
+      resolve(res.data)
+    }).catch(err => {
+      reject(err.data)
+    })
+  })
+}
+
+/**
+ * Send a POST request.
+ * @param url URL
+ * @param params Params
+ * @return {Promise<any>} Response data
+ */
+export function post (url, params) {
+  return new Promise((resolve, reject) => {
+    service.post(url, params)
+      .then(res => {
+        resolve(res.data)
+      })
+      .catch(err => {
+        reject(err.data)
+      })
+  })
+}
 
 export default service
