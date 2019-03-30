@@ -3,7 +3,7 @@
     <header class="header" role="banner"/>
     <div class="setup-header">
       <h1>Join {{ appName }}</h1>
-      <p class="lead">The best way to design, build, and ship software.</p>
+      <p class="lead">{{ $store.state.app.description }}</p>
     </div>
     <el-steps :active="1" class="steps">
       <el-step title="Step 1" description="Some description"/>
@@ -27,18 +27,27 @@
           </el-form>
         </el-col>
         <el-col :span="8">
-          <el-card shadow="hover">
+          <el-card shadow="hover" style="border: 1px solid #dcdfe6;">
             <div slot="header" class="clearfix">
-              <h2>You’ll love GitHub</h2>
+              <h2>You’ll love {{ appName }}</h2>
             </div>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
-              dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex
-              ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-              fugiat
-              nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit
-              anim id est laborum.</p>
+            <p>{{ placeholderText }}</p>
           </el-card>
         </el-col>
+      </el-row>
+      <el-row type="flex">
+        <el-col :span="16" style="margin-bottom: 10px">
+          <h2 class="create-account" style="margin-bottom: 20px">Verify</h2>
+          <el-card shadow="never" style="width: 466px; border: 1px solid #dcdfe6;">
+            <p>[Validation code here.] {{ placeholderText }}</p>
+          </el-card>
+        </el-col>
+      </el-row>
+      <el-row class="term-privacy">
+        <p>By clicking “Create an account” below, you agree to our
+          <a href="/terms" target="_blank">terms of service</a> and
+          <a href="/privacy" target="_blank">privacy statement</a>.
+          We’ll occasionally send you account related emails.</p>
       </el-row>
       <el-row>
         <el-button type="success">Create an account</el-button>
@@ -48,17 +57,26 @@
 </template>
 
 <script>
+// import { request } from '../utils/request'
 export default {
   name: 'Join',
   data () {
     return {
       appName: this.$store.state.app.appName.toLocaleUpperCase(),
+      placeholderText: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, ' +
+        'sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ' +
+        'Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. ' +
+        'Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. ' +
+        'Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
       registerForm: {
-        username: 'Test',
-        password: '123456',
-        email: 'test@gmail.com'
+        username: null,
+        password: null,
+        email: null
       }
     }
+  },
+  mounted () {
+    // request('www.bing.com')
   }
 }
 </script>
@@ -123,6 +141,12 @@ $light_gray2: #b0b0b0;
   box-shadow: 0 1px 3px rgba(0, 0, 0, .075);
   margin-bottom: 30px;
   width: 294px;
+}
+
+.term-privacy {
+  border-bottom: 1px solid #eee;
+  border-top: 1px solid #eee;
+  margin: 15px 0;
 }
 
 h1 {

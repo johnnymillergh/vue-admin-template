@@ -1,6 +1,7 @@
 import Cookies from 'js-cookie'
 
-const TokenKey = 'vue_admin_template_token'
+// Token key of JWT
+export const TokenKey = 'Authorization'
 
 export function getToken () {
   return Cookies.get(TokenKey)

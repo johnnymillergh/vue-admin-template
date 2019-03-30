@@ -1,4 +1,5 @@
 import { param2Obj } from './utils'
+import { UniversalStatus } from '../src/constants/universal-status'
 
 const tokens = {
   admin: {
@@ -31,12 +32,12 @@ export default {
 
     if (data) {
       return {
-        code: 20000,
+        code: UniversalStatus.SUCCESS.code,
         data
       }
     }
     return {
-      code: 60204,
+      code: UniversalStatus.FAILURE,
       message: 'Account and password are incorrect.'
     }
   },
@@ -46,7 +47,7 @@ export default {
 
     if (info) {
       return {
-        code: 20000,
+        code: UniversalStatus.SUCCESS.code,
         data: info
       }
     }
@@ -57,7 +58,7 @@ export default {
   },
   logout: () => {
     return {
-      code: 20000,
+      code: UniversalStatus.LOGOUT.code,
       data: 'success'
     }
   }

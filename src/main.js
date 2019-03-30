@@ -1,21 +1,27 @@
 import Vue from 'vue'
-
-import 'normalize.css/normalize.css' // A modern alternative to CSS resets
+// A modern alternative to CSS resets
+import 'normalize.css/normalize.css'
 
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
-import locale from 'element-ui/lib/locale/lang/en' // lang i18n
-
-import '@/styles/index.scss' // global css
+// Language (i18n)
+import locale from 'element-ui/lib/locale/lang/en'
+import i18n from './lang'
+// Global css
+import '@/styles/index.scss'
 
 import App from './App'
 import store from './store'
 import router from './router'
 
-import '@/icons' // icon
-import '@/permission' // permission control
-import i18n from './lang'
+// icon
+import '@/icons'
+// Permission control
+import '@/permission'
+// Universal status enumerations
+import '@/constants/universal-status'
 
+// Simulation data
 /**
  * This project originally used easy-mock to simulate data,
  * but its official service is very unstable,
@@ -24,7 +30,7 @@ import i18n from './lang'
  * it will intercept your request, so you won't see the request in the network.
  * If you remove `../mock` it will automatically request easy-mock data.
  */
-import '../mock' // simulation data
+import '../mock'
 
 Vue.use(ElementUI, { locale })
 
